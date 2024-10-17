@@ -1,0 +1,66 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('background-image.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #333;
+}
+
+header {
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    text-align: center;
+    border-bottom: 2px solid #f8f9fa;
+}
+
+.container.content {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 40px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    margin-top: 30px;
+    font-weight: bold;
+    color: #235789;
+}
+
+p, ul {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+footer {
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 50px;
+}
+
+strong {
+    color: #235789;
+}
+
+@media (max-width: 768px) {
+    .container.content {
+        padding: 20px;
+    }
+
+    header {
+        font-size: 18px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    p, ul {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrirajte se</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/signup.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center mb-4">Registrirajte se</h3>
+                        <form action="/signup" method="POST" onsubmit="return validateForm()">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Korisničko ime</label>
+                                <input type="text" class="form-control" id="username" name="username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email:</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="ime" class="form-label">Ime:</label>
+                                <input type="text" class="form-control" id="ime" name="ime" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="prezime" class="form-label">Prezime:</label>
+                                <input type="text" class="form-control" id="prezime" name="prezime" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="mobitel" class="form-label">Broj mobitela:</label>
+                                <input type="tel" class="form-control" id="mobitel" name="mobitel" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="adresa" class="form-label">Adresa:</label>
+                                <input type="text" class="form-control" id="adresa" name="adresa" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Lozinka:</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirm_password" class="form-label">Potvrdite Lozinku:</label>
+                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-block">Registrirajte se</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function validateForm() {
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirm_password").value;
+
+            if (password !== confirmPassword) {
+                alert("Lozinke se ne podudaraju. Pokušajte ponovo.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

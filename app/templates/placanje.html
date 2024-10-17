@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/payment.css" rel="stylesheet">
+    <title>Placanje</title>
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background for better contrast */
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+        .payment-card {
+            background-color: #ffffff; /* White background for the card */
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h2 {
+            color: #007bff; /* Bootstrap primary color */
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+        }
+        .car-image {
+            width: 100%; /* Full width for responsiveness */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 8px; /* Rounded corners for the image */
+        }
+        .car-info {
+            display: flex;
+            align-items: center;
+        }
+        .car-info div {
+            flex: 1; /* Ensure even distribution */
+        }
+        .car-info img {
+            max-width: 150px; /* Limit image size */
+            margin-left: 20px; /* Space between text and image */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="payment-card p-4">
+            <h2 class="text-center mb-4">Proces plaćanja za {{ car.ime }}</h2>
+            <div class="car-info">
+                <div>
+                    <p><strong>Model:</strong> {{ car.model.naziv_modela }}</p>
+                    <p><strong>Godina:</strong> {{ car.godina }}</p>
+                    <p><strong>Cijena:</strong> {{ car.cijena }} KM</p>
+                </div>
+                <img src="{{ car.slika }}" alt="{{ car.ime }} Image" class="car-image">
+            </div>
+
+            <!-- Payment Form -->
+            <form method="post" action="/process_payment/{{ car.id }}">
+                <div class="mb-3">
+                    <label for="credit_card" class="form-label">Broj kartice</label>
+                    <input type="text" id="credit_card" name="credit_card" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="expiry_date" class="form-label">Vrijedi do</label>
+                    <input type="text" id="expiry_date" name="expiry_date" class="form-control" placeholder="MM/YY" required>
+                </div>
+                <div class="mb-3">
+                    <label for="cvv" class="form-label">CVV</label>
+                    <input type="text" id="cvv" name="cvv" class="form-control" required>
+                </div>
+
+                <!-- Submit Payment -->
+                <button type="submit" class="btn btn-primary btn-block">Plati {{ car.cijena }} KM</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

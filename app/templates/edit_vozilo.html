@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Car</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css"> 
+</head>
+
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Edit Car</h1>
+
+        <form action="/edit_vozilo/{{ vozilo.id }}" method="POST" class="bg-white p-4 rounded shadow">
+            <div class="mb-3">
+                <label for="ime" class="form-label">Ime:</label>
+                <input type="text" id="ime" name="ime" class="form-control" value="{{ vozilo.ime }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="marka" class="form-label">Marka:</label>
+                <select id="marka" name="marka" class="form-select" required>
+                    <option value="" disabled>Odaberi marku</option>
+                    {% for m in marka %}
+                        <option value="{{ m.id }}" {% if vozilo.marka == m.id %}selected{% endif %}>
+                            {{ m.ime }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="model_id" class="form-label">Model:</label>
+                <select id="model_id" name="model_id" class="form-select" required>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="godina" class="form-label">Godina:</label>
+                <input type="text" id="godina" name="godina" class="form-control" value="{{ vozilo.godina }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="cijena" class="form-label">Cijena:</label>
+                <input type="text" id="cijena" name="cijena" class="form-control" value="{{ vozilo.cijena }}" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <a href="/" class="btn btn-secondary">Povratak na početnu stranicu</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const markaSelect = document.getElementById('marka');
+            const modelSelect = document.getElementById('model_id');
+            const currentModelId = "{{ vozilo.model_id }}";  
+
+            markaSelect.addEventListener('change', function () {
+                const markaId = this.value;
+                if (markaId) {
+                    fetch(`/models/${markaId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            modelSelect.innerHTML = '<option value="">Select Model</option>';
+                            data.forEach(model => {
+                                const option = document.createElement('option');
+                                option.value = model.id;
+                                option.textContent = model.naziv_modela;
+                                if (model.id == currentModelId) {
+                                    option.selected = true;  
+                                }
+                                modelSelect.appendChild(option);
+                            });
+                        })
+                        .catch(error => console.error('Error fetching models:', error));
+                } else {
+                    modelSelect.innerHTML = '<option value="">Select Model</option>';
+                }
+            });
+
+            if (markaSelect.value) {
+                markaSelect.dispatchEvent(new Event('change'));
+            }
+        });
+    </script>
+    
+</body>
+
+</html>

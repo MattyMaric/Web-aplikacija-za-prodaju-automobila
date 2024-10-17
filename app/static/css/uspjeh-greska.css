@@ -1,0 +1,22 @@
+body {
+    background-image: url('background-image.jpg');
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 100%;
+    color: white;
+}
+
+.error-container h1,
+.error-container p {
+    color: white;
+}

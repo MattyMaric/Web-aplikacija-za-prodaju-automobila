@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="hr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalji Vozila</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/vozilo-detail.css"> <!-- Link to external CSS file -->
+</head>
+
+<body>
+
+    <!-- "Return to Home" button -->
+    <a href="/" class="btn btn-sm btn-secondary" style="position: absolute; top: 10px; left: 10px;">Početna</a>
+    
+
+    <div class="container mt-5">
+        <h2 class="mb-4">{{ vozilo.ime }}</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="image-container mb-3">
+                    <img src="{{ vozilo.slika }}" alt="Uploaded Image" class="img-fluid">
+                </div>
+                
+
+                
+
+            <div class="col-md-6">
+                <ul class="list-unstyled">
+                    <li><strong>Objavio:<a href="/profile/{{ vozilo.korisnik.id }}">{{ vozilo.korisnik.username }}</a></strong></li>
+                    <li><strong>Godina:</strong> {{ vozilo.godina }}</li>
+                    <li><strong>Kilometraža:</strong> {{ vozilo.kilometraza }} km</li>
+                    <li><strong>Cijena:</strong> {{ vozilo.cijena }} KM</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="mb-3">
+                <!-- Check if the user is logged in -->
+                {% if is_logged_in %}
+                    <!-- If the user is the creator, show the edit button; otherwise, show the buy button -->
+                    {% if is_creator %}
+                        <a href="/edit_vozilo/{{ vozilo.id }}" class="btn btn-warning">Uredi</a>
+                    {% else %}
+                        <a href="/kupnja/{{ vozilo.id }}" class="btn btn-success">Kupi</a>
+                    {% endif %}
+                    
+                    <!-- Favorite Button: Add/Remove based on user's favorites -->
+                    <form method="post" action="/favorites/{{ vozilo.id }}" style="display:inline;">
+                        <button type="submit" class="btn btn-primary">
+                            {% if is_favorite %}
+                                Ukloni iz favorita
+                            {% else %}
+                                Dodaj u favorite
+                            {% endif %}
+                        </button>
+                    </form>
+                {% else %}
+                    <!-- If the user is not logged in, show a message or hide buttons -->
+                    <p class="text-danger">Prijavite se kako biste mogli kupiti vozilo ili dodati u favorite.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Description Section -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <h4 class="mb-3"><strong>Opis:</strong></h4>
+                <p>{{ vozilo.opis }}</p>
+            </div>
+        </div>
+
+        <!-- Technical Specifications and Additional Details -->
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <div class="technical-specifications">
+                    <h4>Tehničke Specifikacije</h4>
+                    <ul class="list-unstyled">
+                        <li><strong>Veličina guma:</strong> {{ vozilo.tire_size }}</li>
+                        <li><strong>Boja automobila:</strong> {{ vozilo.car_color }}</li>
+                        <li><strong>Vrsta goriva:</strong> {{ vozilo.fuel_type }}</li>
+                        <li><strong>Vrsta mjenjača:</strong> {{ vozilo.transmission_type }}</li>
+                        <li><strong>Vrsta pogona:</strong> {{ vozilo.drive_type }}</li>
+                        <li><strong>Broj vrata:</strong> {{ vozilo.number_of_doors }}</li>
+                        <li><strong>Broj sjedala:</strong> {{ vozilo.number_of_seats }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="technical-specifications">
+                    <h4>Dodatne Specifikacije</h4>
+                    <ul class="list-unstyled">
+                        <li><strong>Zapremina motora:</strong> {{ vozilo.engine_size }} L</li>
+                        <li><strong>Snaga:</strong> {{ vozilo.horsepower }} HP</li>
+                        <li><strong>Obrtni moment:</strong> {{ vozilo.torque }} Nm</li>
+                        <li><strong>CO2 Emisije:</strong> {{ vozilo.co2_emissions }} g/km</li>
+                        <li><strong>Potrošnja goriva (Grad):</strong> {{ vozilo.fuel_consumption_city }} L/100km</li>
+                        <li><strong>Potrošnja goriva (Autocesta):</strong> {{ vozilo.fuel_consumption_highway }} L/100km</li>
+                        <li><strong>Potrošnja goriva (Kombinirana):</strong> {{ vozilo.fuel_consumption_combined }} L/100km</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Features Section -->
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <div class="technical-specifications">
+                    <h4>Karakteristike</h4>
+                    <ul class="list-unstyled">
+                        <li><strong>ABS:</strong> {{ 'Da' if vozilo.abs else 'Ne' }}</li>
+                        <li><strong>ESP:</strong> {{ 'Da' if vozilo.esp else 'Ne' }}</li>
+                        <li><strong>Airbagovi:</strong> {{ 'Da' if vozilo.airbags else 'Ne' }}</li>
+                        <li><strong>Centralno zaključavanje:</strong> {{ 'Da' if vozilo.central_lock else 'Ne' }}</li>
+                        <li><strong>Power Windows:</strong> {{ 'Da' if vozilo.power_windows else 'Ne' }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="technical-specifications">
+                    <h4>Dodatne Karakteristike</h4>
+                    <ul class="list-unstyled">
+                        <li><strong>Panoramski krov:</strong> {{ 'Da' if vozilo.sunroof else 'Ne' }}</li>
+                        <li><strong>Navigacija:</strong> {{ 'Da' if vozilo.navigation else 'Ne' }}</li>
+                        <li><strong>Xenon svjetla:</strong> {{ 'Da' if vozilo.xenon_lights else 'Ne' }}</li>
+                        <li><strong>Kožne sjedalice:</strong> {{ 'Da' if vozilo.leather_seats else 'Ne' }}</li>
+                        <li><strong>Senzori za parkiranje:</strong> {{ 'Da' if vozilo.parking_sensors else 'Ne' }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- More Features -->
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <div class="technical-specifications">
+                    <h4>Ostale Karakteristike</h4>
+                    <ul class="list-unstyled">
+                        <li><strong>Backup Kamera:</strong> {{ 'Da' if vozilo.backup_camera else 'Ne' }}</li>
+                        <li><strong>Grijana sjedala:</strong> {{ 'Da' if vozilo.heated_seats else 'Ne' }}</li>
+                        <li><strong>Bluetooth:</strong> {{ 'Da' if vozilo.bluetooth else 'Ne' }}</li>
+                        <li><strong>Tempomat:</strong> {{ 'Da' if vozilo.cruise_control else 'Ne' }}</li>
+                        <li><strong>Automatska kontrola klime:</strong> {{ 'Da' if vozilo.automatic_climate_control else 'Ne' }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
